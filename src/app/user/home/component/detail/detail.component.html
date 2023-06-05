@@ -1,0 +1,147 @@
+<section class="breadcrumb-section set-bg" data-setbg="./assets/image//banner/product.jpg">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12 text-center">
+              <div class="breadcrumb__text">
+                  <h2 style="color: azure;">Sản phẩm: <span style="color: red;">{{ detail_name }}</span>  </h2>
+                  <div class="breadcrumb__option">
+                      <a  style="color: white;" href="">Trang chủ</a>/
+                      <a  style="color: white;" [routerLink]="['/san-pham/',id]">{{detail_name}}</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+<hr style="color: black;">
+<section class="product-details spad">
+  <div class="container">
+      <div class="row"  >
+
+          <div class="col-lg-6 col-md-6">
+            <div class="product__details__pic">
+                <div class="product__details__pic__item">
+                    <img class="product__details__pic__item--large"
+                    [src]="'http://127.0.0.1:8000/storage/image/product/'+detail_img_src" alt="">
+                </div>
+                <div class="product__details__pic__slider owl-carousel">
+                  <div *ngFor="let img of imgage_all">
+                      <img data-imgbigurl="{{ 'http://127.0.0.1:8000/storage/image/product/' + img.image }}"
+                      [src]="'http://127.0.0.1:8000/storage/image/product/' + img.image"   alt="">
+                  </div>
+              </div>
+            </div>
+        </div>
+          <div class="col-lg-6 col-md-6">
+              <div class="product__details__text">
+                  <h3>{{ detail_name }}</h3>
+                  <div class="product__details__rating">
+                      <i class="fa fa-star"></i>&nbsp;
+                      <i class="fa fa-star"></i>&nbsp;
+                      <i class="fa fa-star"></i>&nbsp;
+                      <i class="fa fa-star"></i>&nbsp;
+                      <i class="fa fa-star-half-o"></i>
+                      <!-- <span>(18 reviews)</span> -->
+                  </div>
+                  <div class="product__details__price" >{{detail_price |currency:'VND' }}</div>
+                  <p [innerHTML]="tech_specs"></p>
+                  <p>Size:</p>
+                  <select class="form-control" [(ngModel)]="selectedSize">
+                    <option *ngFor="let size of sizes" [value]="size.id">{{size.size}}</option>
+                  </select>
+                  <p>Color:</p>
+                  <select class="form-control" [(ngModel)]="selectedColor">
+                    <option *ngFor="let color of colors" [value]="color.id">{{color.color}}</option>
+                  </select>
+                  <div class="product__details__quantity">
+                      <div class="quantity">
+                          <div class="pro-qty">
+                              <input type="number" value="1" min="0">
+                          </div>
+                      </div>
+                  </div>
+                  <button class="primary-btn" (click)="addProduct()">Thêm vào giỏ hàng</button>
+                  <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                  <ul>
+                      <li><b>Số lượng:</b> <span>{{quantity}}</span></li>
+                      <li><b>Chia sẻ</b>
+                          <div class="share">
+                              <a href="#"><i class="fa fa-facebook"></i></a>
+                              <a href="#"><i class="fa fa-twitter"></i></a>
+                              <a href="#"><i class="fa fa-instagram"></i></a>
+                              <a href="#"><i class="fa fa-pinterest"></i></a>
+                          </div>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+          <div class="col-lg-12">
+              <div class="product__details__tab">
+                  <ul class="nav nav-tabs" role="tablist">
+                      <li class="nav-item">
+                          <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
+                              aria-selected="true">Mô tả</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
+                              aria-selected="false">Thông tin</a>
+                      </li>
+                  </ul>
+                  <div class="tab-content">
+                      <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                          <div class="product__details__tab__desc">
+                              <h6>Thông tin mô tả</h6>
+                              <!-- <p>{{ detail_description }}</p> -->
+                              <p [innerHTML]="detail_description" ></p>
+                          </div>
+                      </div>
+                      <div class="tab-pane" id="tabs-2" role="tabpanel">
+                          <div class="product__details__tab__desc">
+                            <h6>Thông tin sản phẩm</h6>
+                            <p [innerHTML]="tech_specs"></p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+  </div>
+</section>
+<div class="product__discount mr-5 ml-5">
+  <div class="section-title product__discount__title">
+      <h2>Sản phẩm liên quan</h2>
+  </div>
+
+  <div class="row">
+      <owl-carousel-o [options]="customOptions">
+          <ng-container *ngFor="let slide of product_related">
+              <ng-template carouselSlide [id]="slide.id">
+                  <div class="product__discount__item">
+
+                      <div class="product__discount__item__pic">
+
+                          <!-- <img [src]="slide.img_src"> -->
+                          <img [src]="'http://127.0.0.1:8000/storage/image/product/'+slide.images?.[0]?.image" alt="" >
+
+                          <!-- <div class="product__discount__percent">-20%</div> -->
+                          <ul class="product__item__pic__hover">
+                            <li><a href="/san-pham/{{ slide.id }}"><i class="fa fa-eye"></i></a></li>
+                              <!-- <li><a  (click)="addProduct(slide)" ><i class="fa fa-shopping-cart"></i></a></li> -->
+                          </ul>
+                      </div>
+                      <!-- <h5><a [routerLink]="['/san-pham/',slide.id]">{{ slide.name }}</a></h5> -->
+                      <div class="product__discount__item__text">
+                          <span>Dried Fruit</span>
+                          <h5><a [routerLink]="['/san-pham/',slide.id]">{{ slide.name }}</a></h5>
+                          <div class="product__item__price" style="color: red;">{{ slide.default_price |currency:'VND'}} </div>
+                      </div>
+                  </div>
+
+              </ng-template>
+          </ng-container>
+      </owl-carousel-o>
+  </div>
+
+
+</div>
